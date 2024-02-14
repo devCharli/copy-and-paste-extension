@@ -10,7 +10,7 @@ import { Tooltip } from "@mui/material";
 
 function Navbar() {
   return (
-    <AppBar>
+    <AppBar position="static">
       <Container
         sx={{
           display: "flex",
@@ -29,8 +29,9 @@ function Navbar() {
               sx={{
                 mr: 2,
                 fontFamily: "monospace",
+                fontSize: "14px",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".2rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
@@ -44,7 +45,7 @@ function Navbar() {
             <DeleteSweepIcon sx={{ mr: 1, cursor: "pointer" }} />
           </Tooltip>
           <Tooltip title="Tip">
-            <TipsAndUpdatesIcon sx={{ mr: 1, cursor: "pointer" }} />
+            <TipsAndUpdatesIcon sx={{ cursor: "pointer" }} />
           </Tooltip>
         </Box>
       </Container>
