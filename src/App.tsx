@@ -1,8 +1,10 @@
+import Navbar from "./Components/Navbar";
+
 function App() {
   return (
-    <h1 className="text-3xl text-green-600 font-bold underline">
-      Easy copy and paste
-    </h1>
+    <main>
+      <Navbar />
+    </main>
   );
 }
 
