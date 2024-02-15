@@ -1,10 +1,15 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import EditIcon from "@mui/icons-material/Edit";
 import InputAdornment from "@mui/material/InputAdornment";
-import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-function Input() {
+type InputProp = {
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+};
+
+function Input({ text, setText, handleSubmit }: InputProp) {
   return (
     <Box
       sx={{
@@ -13,6 +18,7 @@ function Input() {
       component="form"
       noValidate
       autoComplete="off"
+      onSubmit={handleSubmit}
     >
       <TextField
         sx={{
@@ -24,11 +30,12 @@ function Input() {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <EditIcon sx={{ mr: 1, cursor: "pointer" }} />
-              <DeleteIcon sx={{ cursor: "pointer" }} />
+              <AddCircleIcon sx={{ mr: 1, cursor: "pointer" }} />
             </InputAdornment>
           ),
         }}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
       />
     </Box>
   );
