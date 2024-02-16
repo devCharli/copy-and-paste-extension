@@ -1,7 +1,5 @@
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Tooltip, Box, TextField, InputAdornment } from "@mui/material";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 type InputProp = {
   text: string;
@@ -30,7 +28,9 @@ function Input({ text, setText, handleSubmit }: InputProp) {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <AddCircleIcon sx={{ mr: 1, cursor: "pointer" }} />
+              <Tooltip title="enter">
+                <KeyboardReturnIcon sx={{ mr: 1, cursor: "pointer" }} />
+              </Tooltip>
             </InputAdornment>
           ),
         }}
