@@ -1,13 +1,14 @@
 import { useState } from "react";
 import Navbar from "./Components/Navbar";
-import Input from "./Components/Input";
+import Input from "./Components/Input"; // Ensure this component correctly handles 'text', 'setText', and 'handleSubmit' props.
 import { v4 as uuidv4 } from "uuid";
 import {
+  Box,
   IconButton,
-  InputAdornment,
   List,
   ListItem,
-  TextField,
+  ListItemButton,
+  ListItemText,
   Tooltip,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,6 +23,7 @@ function App() {
   const [text, setText] = useState("");
   const [list, setList] = useState<listProp[]>([]);
   const [isCopied, setIsCopied] = useState(false);
+  const [copyTooltipText, setcopyTooltipText] = useState("Click to copy");
 
   const addTextToList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ function App() {
       text: text,
     };
     setList((prev) => [...prev, newTextItem]);
-    setText("");
+    setText(""); // Clear input after adding
   };
 
   const copyText = (
@@ -39,63 +41,44 @@ function App() {
   ) => {
     e.stopPropagation();
     navigator.clipboard.writeText(text);
+    setcopyTooltipText("Copied");
     setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    setTimeout(() => setIsCopied(false), 500);
   };
 
   return (
     <main className="max-w-md p-4">
       <Navbar />
       <Input text={text} setText={setText} handleSubmit={addTextToList} />
-      {list &&
-        list.map((listItem) => (
-          <List key={listItem.id}>
-            <Tooltip title="Click to copy">
-              <ListItem
-                style={{ padding: "0" }}
-                onClick={(e) => copyText(e, listItem.text)}
-              >
-                <TextField
-                  sx={{
-                    width: "100%",
-                    cursor: "pointer",
-                  }}
-                  id={`outlined-basic-${listItem.id}`}
-                  variant="outlined"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("Edit clicked");
-                          }}
-                        >
-                          <EditIcon sx={{ mr: 1 }} />
-                        </IconButton>
-                        <IconButton
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("Delete clicked");
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label={isCopied ? "copied" : ""}
-                  value={listItem.text}
-                  InputLabelProps={{ style: { color: "#333" } }}
-                  inputProps={{
-                    readOnly: true,
-                  }}
-                  onClick={() => console.log("clicked")}
-                />
-              </ListItem>
-            </Tooltip>
-          </List>
+      <List>
+        {list.map((listItem) => (
+          <Tooltip title={copyTooltipText} key={listItem.id}>
+            <ListItem
+              style={{ padding: "0" }}
+              onClick={(e) => copyText(e, listItem.text)}
+              disableGutters
+              secondaryAction={
+                <Tooltip title={copyTooltipText}>
+                  <Box>
+                    <Tooltip title="Edit">
+                      <IconButton aria-label="Edit">
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <IconButton aria-label="Delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </Tooltip>
+              }
+            >
+              <ListItemButton>
+                <ListItemText>{listItem.text}</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
         ))}
+      </List>
     </main>
   );
 }
