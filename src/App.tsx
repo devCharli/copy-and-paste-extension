@@ -25,7 +25,7 @@ function App() {
   };
 
   const copyText = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text: string
   ) => {
     e.stopPropagation();
@@ -49,8 +49,8 @@ function App() {
       <CopyList
         list={list}
         copyTooltipText={copyTooltipText}
-        handleOnClick={copyText}
-        handleDelete={deleteText}
+        onHandleCopy={copyText}
+        onHandleDelete={deleteText}
       />
     </main>
   );
