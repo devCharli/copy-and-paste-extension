@@ -12,7 +12,6 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { listProp } from "../App";
 
 type TextListProps = {
-  copyTooltipText: string;
   onHandleCopy: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text: string

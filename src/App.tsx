@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import Input from "./Components/Input"; // Ensure this component correctly handles 'text', 'setText', and 'handleSubmit' props.
 import { v4 as uuidv4 } from "uuid";
 import CopyList from "./Components/List";
+import { Snackbar } from "@mui/material";
 
 export type listProp = {
   text: string;
@@ -12,7 +13,7 @@ export type listProp = {
 function App() {
   const [text, setText] = useState("");
   const [list, setList] = useState<listProp[]>([]);
-  const [copyTooltipText, setCopyTooltipText] = useState("Click to copy");
+  const [showToast, setShowToast] = useState(false);
 
   const addTextToList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,8 +31,7 @@ function App() {
   ) => {
     e.stopPropagation();
     navigator.clipboard.writeText(text);
-    setCopyTooltipText("Copied");
-    setTimeout(() => setCopyTooltipText("Click to copy"), 1000);
+    setShowToast(true);
   };
 
   const deleteText = (id: string) => {
@@ -45,10 +45,24 @@ function App() {
     <main className="max-w-md p-4">
       <Navbar />
       <Input text={text} setText={setText} handleSubmit={addTextToList} />
-
+      <Snackbar
+        open={showToast}
+        autoHideDuration={1000} // Toast disappears after 6 seconds
+        message="Copied"
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        onClose={() => setShowToast(false)}
+        ContentProps={{
+          sx: {
+            backgroundColor: "#4caf50",
+            color: "#fff",
+          },
+        }}
+      />
       <CopyList
         list={list}
-        copyTooltipText={copyTooltipText}
         onHandleCopy={copyText}
         onHandleDelete={deleteText}
       />
