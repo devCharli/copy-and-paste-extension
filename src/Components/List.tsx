@@ -18,9 +18,15 @@ type TextListProps = {
     text: string
   ) => void;
   list: listProp[];
+  handleDelete: (id: string) => void;
 };
 
-function CopyList({ list, copyTooltipText, handleOnClick }: TextListProps) {
+function CopyList({
+  list,
+  copyTooltipText,
+  handleOnClick,
+  handleDelete,
+}: TextListProps) {
   return (
     <List>
       {list.map((listItem) => (
@@ -35,7 +41,7 @@ function CopyList({ list, copyTooltipText, handleOnClick }: TextListProps) {
                   <EditIcon />
                 </IconButton>
                 <IconButton aria-label="Delete">
-                  <DeleteIcon />
+                  <DeleteIcon onClick={() => handleDelete(listItem.id)} />
                 </IconButton>
               </Box>
             }

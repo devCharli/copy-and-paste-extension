@@ -34,6 +34,13 @@ function App() {
     setTimeout(() => setCopyTooltipText("Click to copy"), 1000);
   };
 
+  const deleteText = (id: string) => {
+    if (confirm("Do you really want to delete this?")) {
+      const newList = [...list].filter((item) => item.id !== id);
+      setList(newList);
+    }
+  };
+
   return (
     <main className="max-w-md p-4">
       <Navbar />
@@ -43,6 +50,7 @@ function App() {
         list={list}
         copyTooltipText={copyTooltipText}
         handleOnClick={copyText}
+        handleDelete={deleteText}
       />
     </main>
   );
