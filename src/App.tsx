@@ -3,7 +3,7 @@ import Navbar from "./Components/Navbar";
 import Input from "./Components/Input";
 import { v4 as uuidv4 } from "uuid";
 import CopyList from "./Components/List";
-import { Snackbar } from "@mui/material";
+import { CssBaseline, Snackbar } from "@mui/material";
 import EditInput from "./Components/EditInput";
 
 export type listProp = {
@@ -72,45 +72,49 @@ function App() {
   };
 
   return (
-    <main className="max-w-md p-4">
-      <Navbar />
-      <Input text={text} setText={setText} handleSubmit={addTextToList} />
-      <Snackbar
-        open={showToast}
-        autoHideDuration={1000}
-        message="Copied"
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        onClose={() => setShowToast(false)}
-        ContentProps={{
-          sx: {
-            backgroundColor: "#4caf50",
-            color: "#fff",
-          },
-        }}
-      />
-      {list.map((listItem) =>
-        editItemId === listItem.id && isEdit ? (
-          <EditInput
-            key={listItem.id}
-            text={editItemText}
-            setText={setEditItemText}
-            id={listItem.id}
-            onHandleSubmit={addEditedTextToList}
-          />
-        ) : (
-          <CopyList
-            key={listItem.id}
-            listItem={listItem}
-            onHandleCopy={copyText}
-            onHandleDelete={deleteText}
-            onHandleEdit={() => startEdit(listItem.id)}
-          />
-        )
-      )}
-    </main>
+    <>
+      <CssBaseline />
+
+      <main className="max-w-md p-4">
+        <Navbar />
+        <Input text={text} setText={setText} handleSubmit={addTextToList} />
+        <Snackbar
+          open={showToast}
+          autoHideDuration={1000}
+          message="Copied"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          onClose={() => setShowToast(false)}
+          ContentProps={{
+            sx: {
+              backgroundColor: "#4caf50",
+              color: "#fff",
+            },
+          }}
+        />
+        {list.map((listItem) =>
+          editItemId === listItem.id && isEdit ? (
+            <EditInput
+              key={listItem.id}
+              text={editItemText}
+              setText={setEditItemText}
+              id={listItem.id}
+              onHandleSubmit={addEditedTextToList}
+            />
+          ) : (
+            <CopyList
+              key={listItem.id}
+              listItem={listItem}
+              onHandleCopy={copyText}
+              onHandleDelete={deleteText}
+              onHandleEdit={() => startEdit(listItem.id)}
+            />
+          )
+        )}
+      </main>
+    </>
   );
 }
 
