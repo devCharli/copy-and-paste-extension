@@ -6,9 +6,13 @@ import Box from "@mui/material/Box";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import { Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 
-function Navbar() {
+type NavbarProp = {
+  onDeleteList: () => void;
+};
+
+function Navbar({ onDeleteList }: NavbarProp) {
   return (
     <AppBar position="static">
       <Container
@@ -42,7 +46,12 @@ function Navbar() {
         </Box>
         <Box>
           <Tooltip title="Delete All">
-            <DeleteSweepIcon sx={{ mr: 1, cursor: "pointer" }} />
+            <IconButton
+              onClick={onDeleteList}
+              sx={{ color: "#fff", padding: "0", mr: 1 }}
+            >
+              <DeleteSweepIcon sx={{ cursor: "pointer", color: "fff" }} />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Tip">
             <TipsAndUpdatesIcon sx={{ cursor: "pointer" }} />

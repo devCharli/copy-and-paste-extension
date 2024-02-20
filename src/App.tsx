@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
-  });
+  }, [list]);
 
   const addTextToList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,9 +74,15 @@ function App() {
   };
 
   const deleteText = (id: string) => {
-    if (confirm("Do you really want to delete this?")) {
+    if (confirm("Are you sure you want to delete this?")) {
       const newList = [...list].filter((item) => item.id !== id);
       setList(newList);
+    }
+  };
+
+  const deleteList = () => {
+    if (confirm("Are you sure you want to delete all items?")) {
+      setList([]);
     }
   };
 
@@ -85,7 +91,7 @@ function App() {
       <CssBaseline />
 
       <main className="max-w-md p-4">
-        <Navbar />
+        <Navbar onDeleteList={deleteList} />
         <Input text={text} setText={setText} handleSubmit={addTextToList} />
         <Toast openToast={showToast} onCloseToast={setShowToast} />
         {list.map((listItem) =>
