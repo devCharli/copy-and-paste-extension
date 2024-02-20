@@ -1,5 +1,6 @@
 import { Box, TextField, InputAdornment, Tooltip } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { useEffect, useRef } from "react";
 
 type EditInputProps = {
   onHandleSubmit: (e: React.FormEvent<HTMLFormElement>, id: string) => void;
@@ -9,6 +10,12 @@ type EditInputProps = {
 };
 
 function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
+  const textFieldRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    textFieldRef.current?.focus();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -25,6 +32,7 @@ function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
         }}
         id="outlined-basic"
         variant="outlined"
+        inputRef={textFieldRef}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
