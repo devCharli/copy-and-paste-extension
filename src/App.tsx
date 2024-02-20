@@ -3,8 +3,9 @@ import Navbar from "./Components/Navbar";
 import Input from "./Components/Input";
 import { v4 as uuidv4 } from "uuid";
 import CopyList from "./Components/List";
-import { CssBaseline, Snackbar } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import EditInput from "./Components/EditInput";
+import Toast from "./Components/Toast";
 
 export type listProp = {
   text: string;
@@ -78,22 +79,7 @@ function App() {
       <main className="max-w-md p-4">
         <Navbar />
         <Input text={text} setText={setText} handleSubmit={addTextToList} />
-        <Snackbar
-          open={showToast}
-          autoHideDuration={1000}
-          message="Copied"
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          onClose={() => setShowToast(false)}
-          ContentProps={{
-            sx: {
-              backgroundColor: "#4caf50",
-              color: "#fff",
-            },
-          }}
-        />
+        <Toast openToast={showToast} onCloseToast={setShowToast} />
         {list.map((listItem) =>
           editItemId === listItem.id && isEdit ? (
             <EditInput
