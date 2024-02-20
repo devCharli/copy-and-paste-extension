@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
 import Input from "./Components/Input";
 import { v4 as uuidv4 } from "uuid";
@@ -12,13 +12,21 @@ export type listProp = {
   id: string;
 };
 
+const getInitialData = (): listProp[] => {
+  const data = localStorage.getItem("list");
+  return JSON.parse(data || "[]");
+};
 function App() {
   const [text, setText] = useState("");
-  const [list, setList] = useState<listProp[]>([]);
+  const [list, setList] = useState<listProp[] | []>(getInitialData);
   const [showToast, setShowToast] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editItemId, setEditItemId] = useState<string | null>(null);
   const [editItemText, setEditItemText] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(list));
+  });
 
   const addTextToList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
