@@ -1,5 +1,4 @@
 import {
-  List,
   ListItem,
   Box,
   IconButton,
@@ -16,43 +15,48 @@ type TextListProps = {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text: string
   ) => void;
-  list: listProp[];
+  listItem: listProp;
   onHandleDelete: (id: string) => void;
+  onHandleEdit: (id: string) => void;
 };
 
-function CopyList({ list, onHandleCopy, onHandleDelete }: TextListProps) {
+function CopyList({
+  listItem,
+  onHandleCopy,
+  onHandleDelete,
+  onHandleEdit,
+}: TextListProps) {
   return (
-    <List>
-      {list.map((listItem) => (
-        <ListItem
-          style={{ padding: "0" }}
-          disableGutters
-          secondaryAction={
-            <Box>
-              <IconButton
-                aria-label="Copy"
-                onClick={(e) => onHandleCopy(e, listItem.text)}
-              >
-                <ContentCopyIcon />
-              </IconButton>
-              <IconButton aria-label="Edit">
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                aria-label="Delete"
-                onClick={() => onHandleDelete(listItem.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          }
-        >
-          <ListItemButton>
-            <ListItemText>{listItem.text}</ListItemText>
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+    <ListItem
+      style={{ padding: "0" }}
+      disableGutters
+      secondaryAction={
+        <Box>
+          <IconButton
+            aria-label="Copy"
+            onClick={(e) => onHandleCopy(e, listItem.text)}
+          >
+            <ContentCopyIcon />
+          </IconButton>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => onHandleEdit(listItem.id)}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => onHandleDelete(listItem.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      }
+    >
+      <ListItemButton>
+        <ListItemText>{listItem.text}</ListItemText>
+      </ListItemButton>
+    </ListItem>
   );
 }
 
