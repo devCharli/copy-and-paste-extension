@@ -12,7 +12,7 @@ function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
   return (
     <Box
       sx={{
-        marginTop: "30px",
+        marginTop: "10px",
       }}
       component="form"
       noValidate
@@ -24,7 +24,6 @@ function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
           width: "100%",
         }}
         id="outlined-basic"
-        label="Edit Text"
         variant="outlined"
         InputProps={{
           endAdornment: (

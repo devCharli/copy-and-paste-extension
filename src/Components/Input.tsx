@@ -11,7 +11,7 @@ function Input({ text, setText, handleSubmit }: InputProp) {
   return (
     <Box
       sx={{
-        marginTop: "30px",
+        margin: "30px 0px",
       }}
       component="form"
       noValidate
