@@ -6,6 +6,8 @@ import CopyList from "./Components/List";
 import { CssBaseline } from "@mui/material";
 import EditInput from "./Components/EditInput";
 import Toast from "./Components/Toast";
+import React from "react";
+import TipModal from "./Components/Modal";
 
 export type listProp = {
   text: string;
@@ -16,6 +18,7 @@ const getInitialData = (): listProp[] => {
   const data = localStorage.getItem("list");
   return JSON.parse(data || "[]");
 };
+
 function App() {
   const [text, setText] = useState("");
   const [list, setList] = useState<listProp[] | []>(getInitialData);
@@ -23,6 +26,9 @@ function App() {
   const [isEdit, setIsEdit] = useState(false);
   const [editItemId, setEditItemId] = useState<string | null>(null);
   const [editItemText, setEditItemText] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
@@ -90,10 +96,11 @@ function App() {
     <>
       <CssBaseline />
 
-      <main className="max-w-md p-4">
-        <Navbar onDeleteList={deleteList} />
+      <main className="w-[500px] p-4 relative">
+        <Navbar onDeleteList={deleteList} handleOpen={handleOpen} />
         <Input text={text} setText={setText} handleSubmit={addTextToList} />
         <Toast openToast={showToast} onCloseToast={setShowToast} />
+        <TipModal open={open} handleClose={handleClose} />
         {list.map((listItem) =>
           editItemId === listItem.id && isEdit ? (
             <EditInput

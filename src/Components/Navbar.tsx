@@ -10,9 +10,10 @@ import { IconButton, Tooltip } from "@mui/material";
 
 type NavbarProp = {
   onDeleteList: () => void;
+  handleOpen: () => void;
 };
 
-function Navbar({ onDeleteList }: NavbarProp) {
+function Navbar({ onDeleteList, handleOpen }: NavbarProp) {
   return (
     <AppBar position="static">
       <Container
@@ -50,11 +51,16 @@ function Navbar({ onDeleteList }: NavbarProp) {
               onClick={onDeleteList}
               sx={{ color: "#fff", padding: "0", mr: 1 }}
             >
-              <DeleteSweepIcon sx={{ cursor: "pointer", color: "fff" }} />
+              <DeleteSweepIcon sx={{ cursor: "pointer" }} />
             </IconButton>
           </Tooltip>
           <Tooltip title="Tip">
-            <TipsAndUpdatesIcon sx={{ cursor: "pointer" }} />
+            <IconButton
+              onClick={handleOpen}
+              sx={{ color: "#fff", padding: "0" }}
+            >
+              <TipsAndUpdatesIcon sx={{ cursor: "pointer" }} />
+            </IconButton>
           </Tooltip>
         </Box>
       </Container>
