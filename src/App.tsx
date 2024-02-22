@@ -22,13 +22,11 @@ const getInitialData = (): listProp[] => {
 function App() {
   const [text, setText] = useState("");
   const [list, setList] = useState<listProp[] | []>(getInitialData);
-  const [showToast, setShowToast] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editItemId, setEditItemId] = useState<string | null>(null);
   const [editItemText, setEditItemText] = useState("");
-  const [open, setOpen] = useState(false);
-  const toggleTipModal = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [showToast, setShowToast] = useState(false);
+  const [isTipModalOpen, setIsTipModalOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
@@ -92,14 +90,16 @@ function App() {
     }
   };
 
+  const toggleTipModal = () => setIsTipModalOpen((prev) => !prev);
+
   return (
     <>
       <CssBaseline />
       <main className="w-[500px] p-4 relative">
         <Navbar onDeleteAll={deleteAllList} onToggleModal={toggleTipModal} />
         <Input text={text} setText={setText} handleSubmit={addTextToList} />
-        <Toast openToast={showToast} onCloseToast={setShowToast} />
-        <TipModal open={open} handleClose={handleClose} />
+        <Toast isOpen={showToast} setShowToast={setShowToast} />
+        <TipModal isOpen={isTipModalOpen} onClose={toggleTipModal} />
         {list.map((listItem) =>
           editItemId === listItem.id && isEdit ? (
             <EditInput

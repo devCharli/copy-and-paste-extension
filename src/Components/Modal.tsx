@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const style = {
   position: "absolute",
   top: "15%",
-  right: "55%",
+  right: "44.6%",
   transform: "translate(-50%, -50%)",
   width: "100%",
   maxWidth: "384px",
@@ -14,21 +14,21 @@ const style = {
 };
 
 type TipModalProps = {
-  open: boolean;
-  handleClose: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
-function TipModal({ open, handleClose }: TipModalProps) {
+function TipModal({ isOpen, onClose }: TipModalProps) {
   return (
     <Modal
-      open={open}
-      onClose={handleClose}
+      open={isOpen}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
         <IconButton
-          onClick={handleClose}
+          onClick={onClose}
           sx={{
             padding: "0",
             position: "absolute",

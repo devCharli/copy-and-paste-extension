@@ -1,21 +1,24 @@
 import { Snackbar } from "@mui/material";
 
 type ToastProp = {
-  openToast: boolean;
-  onCloseToast: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  setShowToast: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Toast({ openToast, onCloseToast }: ToastProp) {
+function Toast({ isOpen, setShowToast }: ToastProp) {
+  const handleClose = () => {
+    setShowToast(false);
+  };
   return (
     <Snackbar
-      open={openToast}
+      open={isOpen}
       autoHideDuration={1000}
       message="Copied"
       anchorOrigin={{
         vertical: "top",
         horizontal: "left",
       }}
-      onClose={() => onCloseToast(false)}
+      onClose={handleClose}
       ContentProps={{
         sx: {
           backgroundColor: "#4caf50",
