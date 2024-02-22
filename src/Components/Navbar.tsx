@@ -9,11 +9,11 @@ import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { IconButton, Tooltip } from "@mui/material";
 
 type NavbarProp = {
-  onDeleteList: () => void;
-  handleOpen: () => void;
+  onDeleteAll: () => void;
+  onToggleModal: () => void;
 };
 
-function Navbar({ onDeleteList, handleOpen }: NavbarProp) {
+function Navbar({ onDeleteAll, onToggleModal }: NavbarProp) {
   return (
     <AppBar position="static">
       <Container
@@ -35,8 +35,8 @@ function Navbar({ onDeleteList, handleOpen }: NavbarProp) {
                 mr: 2,
                 fontFamily: "monospace",
                 fontSize: "14px",
-                fontWeight: 700,
-                letterSpacing: ".2rem",
+                fontWeight: 400,
+                letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
@@ -48,7 +48,7 @@ function Navbar({ onDeleteList, handleOpen }: NavbarProp) {
         <Box>
           <Tooltip title="Delete All">
             <IconButton
-              onClick={onDeleteList}
+              onClick={onDeleteAll}
               sx={{ color: "#fff", padding: "0", mr: 1 }}
             >
               <DeleteSweepIcon sx={{ cursor: "pointer" }} />
@@ -56,7 +56,7 @@ function Navbar({ onDeleteList, handleOpen }: NavbarProp) {
           </Tooltip>
           <Tooltip title="Tip">
             <IconButton
-              onClick={handleOpen}
+              onClick={onToggleModal}
               sx={{ color: "#fff", padding: "0" }}
             >
               <TipsAndUpdatesIcon sx={{ cursor: "pointer" }} />

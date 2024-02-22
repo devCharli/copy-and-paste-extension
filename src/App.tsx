@@ -27,7 +27,7 @@ function App() {
   const [editItemId, setEditItemId] = useState<string | null>(null);
   const [editItemText, setEditItemText] = useState("");
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const toggleTipModal = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ function App() {
     }
   };
 
-  const deleteList = () => {
+  const deleteAllList = () => {
     if (confirm("Are you sure you want to delete all items?")) {
       setList([]);
     }
@@ -95,9 +95,8 @@ function App() {
   return (
     <>
       <CssBaseline />
-
       <main className="w-[500px] p-4 relative">
-        <Navbar onDeleteList={deleteList} handleOpen={handleOpen} />
+        <Navbar onDeleteAll={deleteAllList} onToggleModal={toggleTipModal} />
         <Input text={text} setText={setText} handleSubmit={addTextToList} />
         <Toast openToast={showToast} onCloseToast={setShowToast} />
         <TipModal open={open} handleClose={handleClose} />
