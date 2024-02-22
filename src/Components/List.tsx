@@ -8,23 +8,23 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { listProp } from "../App";
+import { itemProp } from "../App";
 
 type TextListProps = {
+  item: itemProp;
   onHandleCopy: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text: string
   ) => void;
-  listItem: listProp;
-  onHandleDelete: (id: string) => void;
   onHandleEdit: (id: string) => void;
+  onHandleDelete: (id: string) => void;
 };
 
 function CopyList({
-  listItem,
+  item,
   onHandleCopy,
-  onHandleDelete,
   onHandleEdit,
+  onHandleDelete,
 }: TextListProps) {
   return (
     <ListItem
@@ -34,19 +34,16 @@ function CopyList({
         <Box>
           <IconButton
             aria-label="Copy"
-            onClick={(e) => onHandleCopy(e, listItem.text)}
+            onClick={(e) => onHandleCopy(e, item.text)}
           >
             <ContentCopyIcon />
           </IconButton>
-          <IconButton
-            aria-label="Edit"
-            onClick={() => onHandleEdit(listItem.id)}
-          >
+          <IconButton aria-label="Edit" onClick={() => onHandleEdit(item.id)}>
             <EditIcon />
           </IconButton>
           <IconButton
             aria-label="Delete"
-            onClick={() => onHandleDelete(listItem.id)}
+            onClick={() => onHandleDelete(item.id)}
           >
             <DeleteIcon />
           </IconButton>
@@ -54,7 +51,7 @@ function CopyList({
       }
     >
       <ListItemButton>
-        <ListItemText>{listItem.text}</ListItemText>
+        <ListItemText>{item.text}</ListItemText>
       </ListItemButton>
     </ListItem>
   );

@@ -9,40 +9,42 @@ import Toast from "./Components/Toast";
 import React from "react";
 import TipModal from "./Components/Modal";
 
-export type listProp = {
+export type itemProp = {
   text: string;
   id: string;
 };
 
-const getInitialData = (): listProp[] => {
-  const data = localStorage.getItem("list");
+const getInitialData = (): itemProp[] => {
+  const data = localStorage.getItem("itemList");
   return JSON.parse(data || "[]");
 };
 
 function App() {
-  const [text, setText] = useState("");
-  const [list, setList] = useState<listProp[] | []>(getInitialData);
-  const [isEdit, setIsEdit] = useState(false);
-  const [editItemId, setEditItemId] = useState<string | null>(null);
-  const [editItemText, setEditItemText] = useState("");
+  const [newItemText, setNewItemText] = useState("");
+  const [itemList, setItemList] = useState<itemProp[] | []>(getInitialData);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentEditingItemId, SetCurrentEditingItemId] = useState<
+    string | null
+  >(null);
+  const [currentEditingItemText, setCurrentEditingItemText] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [isTipModalOpen, setIsTipModalOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
-  }, [list]);
+    localStorage.setItem("itemList", JSON.stringify(itemList));
+  }, [itemList]);
 
-  const addTextToList = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddItem = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTextItem = {
+    const newItem = {
       id: uuidv4(),
-      text: text,
+      text: newItemText,
     };
-    setList((prev) => [...prev, newTextItem]);
-    setText("");
+    setItemList((prev) => [...prev, newItem]);
+    setNewItemText("");
   };
 
-  const copyText = (
+  const handleCopyItem = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text: string
   ) => {
@@ -51,42 +53,42 @@ function App() {
     setShowToast(true);
   };
 
-  const startEdit = (id: string) => {
-    const item = list.find((item) => item.id === id);
+  const handleStartEditItem = (id: string) => {
+    const item = itemList.find((item) => item.id === id);
     if (item) {
-      setEditItemId(id);
-      setEditItemText(item.text);
-      setIsEdit(true);
+      SetCurrentEditingItemId(id);
+      setCurrentEditingItemText(item.text);
+      setIsEditing(true);
     }
   };
 
-  const addEditedTextToList = (
+  const handleSaveEditItem = (
     e: React.FormEvent<HTMLFormElement>,
     id: string
   ) => {
     e.preventDefault();
 
-    const newText = editItemText ?? "";
-    const newList = list.map((item) => {
+    const newText = currentEditingItemText ?? "";
+    const newList = itemList.map((item) => {
       if (item.id === id) {
         return { ...item, text: newText };
       }
       return item;
     });
-    setList(newList);
-    setIsEdit(false);
+    setItemList(newList);
+    setIsEditing(false);
   };
 
-  const deleteText = (id: string) => {
+  const handleDeleteItem = (id: string) => {
     if (confirm("Are you sure you want to delete this?")) {
-      const newList = [...list].filter((item) => item.id !== id);
-      setList(newList);
+      const newList = [...itemList].filter((item) => item.id !== id);
+      setItemList(newList);
     }
   };
 
-  const deleteAllList = () => {
+  const handleDeleteItemList = () => {
     if (confirm("Are you sure you want to delete all items?")) {
-      setList([]);
+      setItemList([]);
     }
   };
 
@@ -96,26 +98,33 @@ function App() {
     <>
       <CssBaseline />
       <main className="w-[500px] p-4 relative">
-        <Navbar onDeleteAll={deleteAllList} onToggleModal={toggleTipModal} />
-        <Input text={text} setText={setText} handleSubmit={addTextToList} />
+        <Navbar
+          onDeleteAll={handleDeleteItemList}
+          onToggleModal={toggleTipModal}
+        />
+        <Input
+          text={newItemText}
+          setText={setNewItemText}
+          handleSubmit={handleAddItem}
+        />
         <Toast isOpen={showToast} setShowToast={setShowToast} />
         <TipModal isOpen={isTipModalOpen} onClose={toggleTipModal} />
-        {list.map((listItem) =>
-          editItemId === listItem.id && isEdit ? (
+        {itemList.map((item) =>
+          currentEditingItemId === item.id && isEditing ? (
             <EditInput
-              key={listItem.id}
-              text={editItemText}
-              setText={setEditItemText}
-              id={listItem.id}
-              onHandleSubmit={addEditedTextToList}
+              key={item.id}
+              text={currentEditingItemText}
+              setText={setCurrentEditingItemText}
+              id={item.id}
+              onHandleSubmit={handleSaveEditItem}
             />
           ) : (
             <CopyList
-              key={listItem.id}
-              listItem={listItem}
-              onHandleCopy={copyText}
-              onHandleDelete={deleteText}
-              onHandleEdit={() => startEdit(listItem.id)}
+              key={item.id}
+              item={item}
+              onHandleCopy={handleCopyItem}
+              onHandleDelete={handleDeleteItem}
+              onHandleEdit={() => handleStartEditItem(item.id)}
             />
           )
         )}
