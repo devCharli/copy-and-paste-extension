@@ -1,13 +1,26 @@
 import { Tooltip, Box, TextField, InputAdornment } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { useState } from "react";
 
 type InputProp = {
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  addItem: (text: string) => void;
 };
 
-function Input({ text, setText, handleSubmit }: InputProp) {
+function Input({ addItem }: InputProp) {
+  const [text, setText] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setText(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    addItem(text);
+    setText("");
+  };
+
   return (
     <Box
       sx={{
@@ -35,7 +48,7 @@ function Input({ text, setText, handleSubmit }: InputProp) {
           ),
         }}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={handleChange}
       />
     </Box>
   );

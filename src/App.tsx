@@ -20,7 +20,6 @@ const getInitialData = (): itemProp[] => {
 };
 
 function App() {
-  const [newItemText, setNewItemText] = useState("");
   const [itemList, setItemList] = useState<itemProp[] | []>(getInitialData);
   const [isEditing, setIsEditing] = useState(false);
   const [currentEditingItemId, SetCurrentEditingItemId] = useState<
@@ -34,14 +33,12 @@ function App() {
     localStorage.setItem("itemList", JSON.stringify(itemList));
   }, [itemList]);
 
-  const handleAddItem = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleAddItem = (text: string) => {
     const newItem = {
       id: uuidv4(),
-      text: newItemText,
+      text: text,
     };
     setItemList((prev) => [...prev, newItem]);
-    setNewItemText("");
   };
 
   const handleCopyItem = (
@@ -102,11 +99,7 @@ function App() {
           onDeleteAll={handleDeleteItemList}
           onToggleModal={toggleTipModal}
         />
-        <Input
-          text={newItemText}
-          setText={setNewItemText}
-          handleSubmit={handleAddItem}
-        />
+        <Input addItem={handleAddItem} />
         <Toast isOpen={showToast} setShowToast={setShowToast} />
         <TipModal isOpen={isTipModalOpen} onClose={toggleTipModal} />
         {itemList.map((item) =>
