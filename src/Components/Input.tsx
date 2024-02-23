@@ -1,6 +1,6 @@
 import { Tooltip, Box, TextField, InputAdornment } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type InputProp = {
   addItem: (text: string) => void;
@@ -8,6 +8,11 @@ type InputProp = {
 
 function Input({ addItem }: InputProp) {
   const [text, setText] = useState("");
+  const textFieldRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    textFieldRef.current?.focus();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,6 +43,7 @@ function Input({ addItem }: InputProp) {
         id="outlined-basic"
         label="Add Text"
         variant="outlined"
+        inputRef={textFieldRef}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
