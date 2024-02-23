@@ -59,16 +59,10 @@ function App() {
     }
   };
 
-  const handleSaveEditItem = (
-    e: React.FormEvent<HTMLFormElement>,
-    id: string
-  ) => {
-    e.preventDefault();
-
-    const newText = currentEditingItemText ?? "";
+  const handleSaveEditItem = (text: string) => {
     const newList = itemList.map((item) => {
-      if (item.id === id) {
-        return { ...item, text: newText };
+      if (item.id === currentEditingItemId) {
+        return { ...item, text: text };
       }
       return item;
     });
@@ -106,10 +100,8 @@ function App() {
           currentEditingItemId === item.id && isEditing ? (
             <EditInput
               key={item.id}
-              text={currentEditingItemText}
-              setText={setCurrentEditingItemText}
-              id={item.id}
-              onHandleSubmit={handleSaveEditItem}
+              currentText={currentEditingItemText}
+              editItem={handleSaveEditItem}
             />
           ) : (
             <CopyList

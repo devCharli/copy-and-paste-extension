@@ -1,16 +1,27 @@
 import { Box, TextField, InputAdornment, Tooltip } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type EditInputProps = {
-  onHandleSubmit: (e: React.FormEvent<HTMLFormElement>, id: string) => void;
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  id: string;
+  editItem: (text: string) => void;
+  currentText: string;
 };
 
-function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
+function EditInput({ editItem, currentText }: EditInputProps) {
+  const [text, setText] = useState(currentText);
   const textFieldRef = useRef<HTMLInputElement | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setText(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editItem(text);
+    setText("");
+  };
 
   useEffect(() => {
     textFieldRef.current?.focus();
@@ -24,7 +35,7 @@ function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
       component="form"
       noValidate
       autoComplete="off"
-      onSubmit={(e) => onHandleSubmit(e, id)}
+      onSubmit={handleSubmit}
     >
       <TextField
         sx={{
@@ -43,7 +54,7 @@ function EditInput({ text, setText, onHandleSubmit, id }: EditInputProps) {
           ),
         }}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={handleChange}
       />
     </Box>
   );
