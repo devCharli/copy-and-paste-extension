@@ -3,12 +3,12 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
-  top: "15%",
-  right: "44.6%",
+  top: "50%",
+  left: "60%",
   transform: "translate(-50%, -50%)",
   width: "100%",
-  maxWidth: "384px",
   bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -25,6 +25,10 @@ function TipModal({ isOpen, onClose }: TipModalProps) {
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{
+        position: "relative",
+        width: 400,
+      }}
     >
       <Box sx={style}>
         <IconButton
@@ -39,9 +43,6 @@ function TipModal({ isOpen, onClose }: TipModalProps) {
         >
           <CloseIcon />
         </IconButton>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Tip
-        </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           Your data will be saved in your browser's storage. If you are using a
           public computer, please delete all data before closing the browser.
