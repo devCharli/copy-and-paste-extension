@@ -26,6 +26,9 @@ function CopyList({
   onHandleEdit,
   onHandleDelete,
 }: TextListProps) {
+  const truncatedText =
+    item.text.length > 40 ? `${item.text.slice(0, 40)}...` : item.text;
+
   return (
     <ListItem
       style={{ padding: "0" }}
@@ -51,7 +54,7 @@ function CopyList({
       }
     >
       <ListItemButton>
-        <ListItemText>{item.text}</ListItemText>
+        <ListItemText>{truncatedText}</ListItemText>
       </ListItemButton>
     </ListItem>
   );
