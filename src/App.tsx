@@ -101,6 +101,7 @@ function App() {
               key={item.id}
               currentText={currentEditingItemText}
               editItem={handleSaveEditItem}
+              setIsEditing={setIsEditing}
             />
           ) : (
             <CopyList
