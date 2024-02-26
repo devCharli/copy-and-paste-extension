@@ -3,11 +3,13 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { useEffect, useRef, useState } from "react";
 
 type InputProp = {
-  addItem: (text: string) => void;
+  addItem?: (text: string) => void;
+  editItem?: (text: string) => void;
+  currentText?: string;
 };
 
-function Input({ addItem }: InputProp) {
-  const [text, setText] = useState("");
+function Input({ addItem, editItem, currentText }: InputProp) {
+  const [text, setText] = useState(currentText ? currentText : "");
   const textFieldRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -22,14 +24,14 @@ function Input({ addItem }: InputProp) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addItem(text);
+    currentText ? editItem?.(text) : addItem?.(text);
     setText("");
   };
 
   return (
     <Box
       sx={{
-        margin: "30px 0px",
+        margin: currentText ? "10px" : "30px 0px",
       }}
       component="form"
       noValidate
@@ -41,7 +43,7 @@ function Input({ addItem }: InputProp) {
           width: "100%",
         }}
         id="outlined-basic"
-        label="Add Text"
+        label={currentText ? "" : "Add Text"}
         variant="outlined"
         inputRef={textFieldRef}
         InputProps={{

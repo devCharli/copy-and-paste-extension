@@ -4,7 +4,6 @@ import Input from "./Components/Input";
 import { v4 as uuidv4 } from "uuid";
 import CopyList from "./Components/List";
 import { CssBaseline } from "@mui/material";
-import EditInput from "./Components/EditInput";
 import Toast from "./Components/Toast";
 import React from "react";
 import TipModal from "./Components/Modal";
@@ -98,7 +97,7 @@ function App() {
         <TipModal isOpen={isTipModalOpen} onClose={toggleTipModal} />
         {itemList.map((item) =>
           currentEditingItemId === item.id && isEditing ? (
-            <EditInput
+            <Input
               key={item.id}
               currentText={currentEditingItemText}
               editItem={handleSaveEditItem}
