@@ -1,3 +1,4 @@
+import { itemProp } from "../App";
 import {
   ListItem,
   Box,
@@ -8,7 +9,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { itemProp } from "../App";
 
 type TextListProps = {
   item: itemProp;

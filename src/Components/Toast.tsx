@@ -1,4 +1,4 @@
-import { Snackbar } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
 
 type ToastProp = {
   isOpen: boolean;

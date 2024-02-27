@@ -1,12 +1,15 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Container,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import { IconButton, Tooltip } from "@mui/material";
 
 type NavbarProp = {
   onDeleteAll: () => void;

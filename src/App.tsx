@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { v4 as uuidv4 } from "uuid";
 import Navbar from "./Components/Navbar";
 import Input from "./Components/Input";
-import { v4 as uuidv4 } from "uuid";
 import CopyList from "./Components/List";
-import { CssBaseline } from "@mui/material";
 import Toast from "./Components/Toast";
-import React from "react";
 import TipModal from "./Components/Modal";
 
 export type itemProp = {
