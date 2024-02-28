@@ -1,7 +1,7 @@
 {
   "name": "easy-copy-and-paste",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
