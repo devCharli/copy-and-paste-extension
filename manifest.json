@@ -4,7 +4,6 @@
   "name": "Fancy Easy Copy & Paste",
   "description": "This Chrome extension app allows users to effortlessly save and edit text snippets directly within their browser.",
   "author": "devCharli",
-  "permissions": ["activeTab"],
   "icons": {
     "16": "icons/icon16.png",
     "64": "icons/icon64.png",
